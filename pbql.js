@@ -76,12 +76,6 @@ const isRequestInContact = (contact, request) => {
         isRequestInList(request, contact[1].phones);
 };
 
-const addJoinedIfNotEmpty = (list, currentLine) => {
-    if (list.length !== 0) {
-        currentLine.push(list.join(','));
-    }
-};
-
 const createListForContact = (fields, contact) => {
     const currentLine = [];
 
@@ -91,10 +85,10 @@ const createListForContact = (fields, contact) => {
                 currentLine.push(contact[0]);
                 break;
             case 'почты':
-                addJoinedIfNotEmpty(contact[1].mails, currentLine);
+                currentLine.push(contact[1].mails.join(','));
                 break;
             case 'телефоны':
-                addJoinedIfNotEmpty(formatPhones(contact[1].phones), currentLine);
+                currentLine.push(formatPhones(contact[1].phones).join(','));
                 break;
             default:
                 return;
