@@ -100,7 +100,7 @@ const createListForContact = (fields, contact) => {
 
 const showContactsInfoByRequest = (request, fields) => {
     let result = [];
-    let currentLine;
+    let currentLine = [];
 
     if (request === '') {
         return;
