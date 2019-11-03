@@ -133,13 +133,16 @@ const deleteContactByRequest = request => {
 };
 
 const addFieldsValues = (list, currentIndex, currentLine, resultList) => {
-    if (list[currentIndex++] === 'телефон') {
-        if (!list[currentIndex].match(/^\d{10}$/)) {
+    if (list[currentIndex] === 'телефон') {
+        if (!list[++currentIndex].match(/^\d{10}$/)) {
             syntaxError(currentLine, countLengthBeforeMistake(list, currentIndex) + 1);
         }
         resultList.phones.push(list[currentIndex++]);
-    } else {
+    } else if (list[currentIndex++] === 'почту') {
         resultList.mails.push(list[currentIndex++]);
+    } else {
+        // console.log(list[currentIndex]);
+        syntaxError(currentLine, countLengthBeforeMistake(list, currentIndex - 2) + 1);
     }
 
     return currentIndex;
