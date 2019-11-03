@@ -285,6 +285,12 @@ function parseShowCommand(commandWords, queryArray, command) {
     return showContactsInfoByRequest(commandWords.slice(currentIndex).join(' '), fields);
 }
 
+function parseMistake(queryArray, command) {
+    if (queryArray.indexOf(command) + 1 !== queryArray.length || command !== '') {
+        syntaxError(queryArray.indexOf(command) + 1, 1);
+    }
+}
+
 function parseCommands(commandWords, queryArray, command) {
     let result;
 
@@ -302,9 +308,7 @@ function parseCommands(commandWords, queryArray, command) {
             result = parseShowCommand(commandWords, queryArray, command);
             break;
         default:
-            if (queryArray.indexOf(command) + 1 !== queryArray.length) {
-                syntaxError(queryArray.indexOf(command) + 1, 1);
-            }
+            parseMistake(queryArray, command);
     }
 
     return result;
@@ -327,10 +331,10 @@ function run(query) {
         if (typeof parseCommandResult !== 'undefined') {
             result = result.concat(parseCommandResult);
         }
+    }
 
-        if (queryArray[queryArray.length - 1] !== '') {
-            syntaxError(queryArray.length, queryArray[queryArray.length - 1].length + 1);
-        }
+    if (queryArray[queryArray.length - 1] !== '') {
+        syntaxError(queryArray.length, queryArray[queryArray.length - 1].length + 1);
     }
 
     return result;
