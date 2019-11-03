@@ -141,8 +141,7 @@ const addFieldsValues = (list, currentIndex, currentLine, resultList) => {
     } else if (list[currentIndex++] === 'почту') {
         resultList.mails.push(list[currentIndex++]);
     } else {
-        // console.log(list[currentIndex]);
-        syntaxError(currentLine, countLengthBeforeMistake(list, currentIndex - 2) + 1);
+        syntaxError(currentLine, countLengthBeforeMistake(list, currentIndex - 1) + 1);
     }
 
     return currentIndex;
