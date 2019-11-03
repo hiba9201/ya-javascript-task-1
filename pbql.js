@@ -234,6 +234,10 @@ function parseDeleteCommands(commandWords, queryArray, command) {
         return;
     }
 
+    if (!['почту', 'телефон'].includes(commandWords[1])) {
+        syntaxError(queryArray.indexOf(command), commandWords[0].length + 2);
+    }
+
     const deleteFieldsResult = parseValuedFieldsSequence(1,
         queryArray.indexOf(command) + 1, commandWords);
     const deleteFields = deleteFieldsResult[0];
