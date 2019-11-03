@@ -147,11 +147,11 @@ const addFieldsValues = (list, currentIndex, currentLine, resultList) => {
     return currentIndex;
 };
 
-const parseValuedFieldsSequence = (currentIndex, currentLine, list) => {
-    let result = { mails: [], phones: [] };
+function goThroughValuedFields(list, currentIndex, currentLine) {
     let even = false;
+    let result = { mails: [], phones: [] };
 
-    while ((list[currentIndex] !== 'для' || !even)) {
+    while (list[currentIndex] !== 'для' || !even) {
         if (!even) {
             currentIndex = addFieldsValues(list, currentIndex, currentLine, result);
         } else if (even && list[currentIndex++] !== 'и') {
@@ -161,6 +161,14 @@ const parseValuedFieldsSequence = (currentIndex, currentLine, list) => {
     }
 
     return [result, currentIndex];
+}
+
+const parseValuedFieldsSequence = (currentIndex, currentLine, list) => {
+    if (list[currentIndex] === 'для') {
+        return [{ mails: [], phones: [] }, currentIndex];
+    }
+
+    return goThroughValuedFields(list, currentIndex, currentLine);
 };
 
 function isField(possibleFields, list, currentIndex, currentLine) {
@@ -169,12 +177,12 @@ function isField(possibleFields, list, currentIndex, currentLine) {
     }
 }
 
-function parseFieldsSequence(currentIndex, currentLine, list) {
+function goThroughFields(list, currentIndex, currentLine) {
     let result = [];
     let even = false;
     const possibleFields = ['имя', 'почты', 'телефоны'];
 
-    while ((list[currentIndex] !== 'для' || !even)) {
+    while (list[currentIndex] !== 'для' || !even) {
         if (!even) {
             isField(possibleFields, list, currentIndex++, currentLine);
             result.push(list[currentIndex - 1]);
@@ -185,6 +193,14 @@ function parseFieldsSequence(currentIndex, currentLine, list) {
     }
 
     return [result, currentIndex];
+}
+
+function parseFieldsSequence(currentIndex, currentLine, list) {
+    if (list[currentIndex] === 'для') {
+        return [[], currentIndex];
+    }
+
+    return goThroughFields(list, currentIndex, currentLine);
 }
 
 /**
