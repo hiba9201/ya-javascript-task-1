@@ -151,7 +151,7 @@ const parseValuedFieldsSequence = (currentIndex, currentLine, list) => {
     let result = { mails: [], phones: [] };
     let even = false;
 
-    while (list[currentIndex] !== 'для' || !even) {
+    while (list[currentIndex] !== 'для') {
         if (!even) {
             currentIndex = addFieldsValues(list, currentIndex, currentLine, result);
         } else if (list[currentIndex++] !== 'и') {
@@ -174,7 +174,7 @@ function parseFieldsSequence(currentIndex, currentLine, list) {
     let even = false;
     const possibleFields = ['имя', 'почты', 'телефоны'];
 
-    while (list[currentIndex] !== 'для' || !even) {
+    while (list[currentIndex] !== 'для') {
         if (!even) {
             isField(possibleFields, list, currentIndex++, currentLine);
             result.push(list[currentIndex - 1]);
