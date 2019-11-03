@@ -225,12 +225,12 @@ function parseDeleteByRequest(commandWords, queryArray, command) {
 
     if (commandWords[currentIndex++] !== 'где') {
         syntaxError(queryArray.indexOf(command) + 1,
-            countLengthBeforeMistake(commandWords, currentIndex) + 1);
+            countLengthBeforeMistake(commandWords, currentIndex - 1) + 1);
     }
 
     if (commandWords[currentIndex++] !== 'есть') {
         syntaxError(queryArray.indexOf(command) + 1,
-            countLengthBeforeMistake(commandWords, currentIndex) + 1);
+            countLengthBeforeMistake(commandWords, currentIndex - 1) + 1);
     }
 
     deleteContactByRequest(commandWords.slice(currentIndex).join(' '));
@@ -257,7 +257,7 @@ function parseDeleteCommands(commandWords, queryArray, command) {
 
     if (commandWords[currentIndex++] !== 'контакта') {
         syntaxError(queryArray.indexOf(command) + 1,
-            countLengthBeforeMistake(commandWords, currentIndex) + 1);
+            countLengthBeforeMistake(commandWords, currentIndex - 1) + 1);
     }
 
     deleteInfoFromContact(commandWords.slice(currentIndex).join(' '),
@@ -272,7 +272,7 @@ function parseAddCommand(commandWords, queryArray, command) {
 
     if (commandWords[currentIndex++] !== 'контакта') {
         syntaxError(queryArray.indexOf(command) + 1,
-            countLengthBeforeMistake(commandWords, currentIndex) + 1);
+            countLengthBeforeMistake(commandWords, currentIndex - 1) + 1);
     }
 
     addInfoToContact(commandWords.slice(currentIndex).join(' '), valuedFields.mails,
@@ -287,17 +287,17 @@ function parseShowCommand(commandWords, queryArray, command) {
 
     if (commandWords[currentIndex++] !== 'контактов,') {
         syntaxError(queryArray.indexOf(command) + 1,
-            countLengthBeforeMistake(commandWords, currentIndex) + 1);
+            countLengthBeforeMistake(commandWords, currentIndex - 1) + 1);
     }
 
     if (commandWords[currentIndex++] !== 'где') {
         syntaxError(queryArray.indexOf(command) + 1,
-            countLengthBeforeMistake(commandWords, currentIndex) + 1);
+            countLengthBeforeMistake(commandWords, currentIndex - 1) + 1);
     }
 
     if (commandWords[currentIndex++] !== 'есть') {
         syntaxError(queryArray.indexOf(command) + 1,
-            countLengthBeforeMistake(commandWords, currentIndex) + 1);
+            countLengthBeforeMistake(commandWords, currentIndex - 1) + 1);
     }
 
     return showContactsInfoByRequest(commandWords.slice(currentIndex).join(' '), fields);
