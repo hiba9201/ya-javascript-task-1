@@ -139,6 +139,7 @@ const addFieldsValues = (list, currentIndex, currentLine, resultList) => {
         }
         resultList.phones.push(list[currentIndex++]);
     } else if (list[currentIndex++] === 'почту') {
+
         resultList.mails.push(list[currentIndex++]);
     } else {
         syntaxError(currentLine, countLengthBeforeMistake(list, currentIndex - 1) + 1);
@@ -261,7 +262,7 @@ function parseDeleteCommands(commandWords, queryArray, command) {
     }
 
     deleteInfoFromContact(commandWords.slice(currentIndex).join(' '),
-        deleteFields.match, deleteFields.phones);
+        deleteFields.mails, deleteFields.phones);
 }
 
 function parseAddCommand(commandWords, queryArray, command) {
@@ -346,9 +347,8 @@ function run(query) {
 
         let parseCommandResult = parseCommands(commandWords, queryArray, command);
 
-        if (typeof parseCommandResult !== 'undefined') {
-            result = result.concat(parseCommandResult);
-        }
+        result = typeof parseCommandResult !== 'undefined'
+            ? result.concat(parseCommandResult) : result;
     }
 
     if (queryArray[queryArray.length - 1] !== '') {
